@@ -10,5 +10,7 @@ fn main()
     std::io::stdin().read_line(&mut massage).expect("Błąd wczytyania danych");
     let massage = massage.trim();
     let ascii = encryption::to_ascii(massage);
+    let encryption = encryption::encrypt(massage);
     println!("Wiadomość w postaci ASCII: {:?}", ascii);
+    println!("Zaszyfrowana wiadomość: {:?}", encryption);
 }
