@@ -44,8 +44,10 @@ pub fn mod_exp(mut base: u128, mut exp: u128, modulus: u128) -> u128 //funkcja s
 {
     let mut result = 1;
     base = base % modulus;
-    while exp > 0 {
-        if exp % 2 == 1 {
+    while exp > 0 
+    {
+        if exp % 2 == 1 
+        {
             result = (result * base) % modulus;
         }
         exp = exp >> 1;

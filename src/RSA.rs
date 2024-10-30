@@ -35,7 +35,7 @@ pub fn generate_p() -> u128
 
     loop
     {
-        let p: u128 = rng.gen_range(1000000..10000000);
+        let p: u128 = rng.gen_range(100..10000);
         if is_prime(p)
         {
             return p;

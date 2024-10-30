@@ -1,5 +1,6 @@
 mod RSA;
 mod encryption;
+mod unencryption;
 fn main() 
 {
     let (p, q, n, fi_n) = RSA::generate_rsa_values();
@@ -13,4 +14,8 @@ fn main()
     let encryption = encryption::encrypt(massage);
     println!("Wiadomość w postaci ASCII: {:?}", ascii);
     println!("Zaszyfrowana wiadomość: {:?}", encryption);
+    let (e) = RSA::generate_e(fi_n);
+    let mut d: u128 = unencryption::find_d(e, fi_n);
+    let decryption = unencryption::decrypt(encryption, n, e, d);
+    println!("Odszyfrowana wiadomość: {:?}", decryption);
 }
