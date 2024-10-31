@@ -25,10 +25,8 @@ pub fn dividing_into_blocks(mut text: &str) -> Vec<String>
     return blocks;
 }
 
-pub fn encrypt(text: &str) -> Vec<u128>
+pub fn encrypt(text: &str, e: u128, n: u128) -> Vec<u128>
 {
-    let (p, q, n, fi_n) = RSA::generate_rsa_values();
-    let e = RSA::generate_e(fi_n);
     let mut encrypted: Vec<u128> = Vec::new();
     let ascii = to_ascii(text);
     for &ascii in ascii.iter()
