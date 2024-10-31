@@ -32,7 +32,6 @@ pub fn nwd(mut a: u128, mut b: u128) -> u128
 pub fn generate_p() -> u128
 {
     let mut rng = ChaCha8Rng::from_entropy();
-
     loop
     {
         let p: u128 = rng.gen_range(100..10000);
