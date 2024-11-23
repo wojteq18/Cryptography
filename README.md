@@ -1,1 +1,1 @@
-a simple crypto project, written in rust. Under construction.
+Simple crypto project, written in rust. Under construction.
