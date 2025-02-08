@@ -1,0 +1,19 @@
+#ignoruj folder target, który jest generowany przez Cargo
+/target/
+
+#Ignoruj pliki tymczasowe, które mogą zostać utworzone przez edytory tekstu lub system operacyjny
+*.rs.bk
+*.swp
+*.swo
+*.bak
+*.tmp
+
+#Ignoruj pliki zależne od edytorów lub IDE
+**/.idea/
+**/.vscode
+*.log
+*.DS_Store
+Thumbs.db
+
+#Ignoruj cache Cargo i inne pliki specyficzne dla lokalnego środowiska
+/Cargo.lock

@@ -1,0 +1,15 @@
+[package]
+name = "Cryptography"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "Cryptography"
+path = "src/lib.rs"
+
+[dependencies]
+rand = "0.8"
+cipher = "0.4"
+rand_chacha = "0.3"
+
+
