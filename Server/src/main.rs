@@ -11,7 +11,8 @@ fn handle_client(
     clients: Arc<Mutex<Vec<TcpStream>>>, 
     current_client: Arc<Mutex<usize>>
 ) {
-    
+    let mut stream = BufReader::new(stream);
+    let mut buffer = String::new();
 }
 
 fn main() {
