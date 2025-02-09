@@ -4,4 +4,3 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-Cryptography = { path = "/home/wojteq18/codes/crypto_project/Cryptography" }
