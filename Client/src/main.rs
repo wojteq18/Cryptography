@@ -1,7 +1,7 @@
 use std::io::{BufReader, BufRead, Write};
 use std::net::TcpStream;
 use std::thread;
-use cryptography::unencryption;
+use Cryptography::unencryption;
 
 fn string_to_vec_u128(s: &str) -> Vec<u128> {
     s.chars().map(|c| c as u128).collect()
@@ -19,7 +19,7 @@ fn main() -> std::io::Result<()> {
             match line {
                 Ok(msg) => {
                     let correct_form = string_to_vec_u128(&msg);
-                    let decrypted = unencryption::decrypt(correct_form);
+                    //let decrypted = unencryption::decrypt(correct_form);
                     println!("Serwer: {}", msg) },
                 Err(e) => {
                     println!("Błąd odczytu od serwera: {}", e);
