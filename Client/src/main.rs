@@ -30,13 +30,16 @@ fn main() -> std::io::Result<()> {
                 Ok(msg) => {
                     // Każda linia interpretowana jako u128
                     if let Ok(value) = msg.trim().parse::<u128>() {
-                        messages.push(value);
-                        //println!("Odebrano: {:?}", messages);
-                        let length = messages[0];
-                        if length == (messages.len() + 3) as u128 {
-                            println!("Otrzymano wiadomość: {:?}", messages);
-                            messages.clear();
+                        if messages.is_empty() {
+                            messages.push(value);
+                        } else {
+                            messages.push(value);
+                            let length = messages[0];
 
+                            if messages.len() == (length as usize) + 3 {
+                                println!("Otrzymano wiadomość: {:?}", &messages);
+                                messages.clear();
+                            }
                         }
                     } else {
                         println!("Błąd parsowania w linii: {}", msg);
@@ -56,11 +59,14 @@ fn main() -> std::io::Result<()> {
         let line = line?;
         // Szyfrujemy wiadomość
         let encrypted_message = encrypt(&line, e, n);
-
+        let length = encrypted_message.len();
+        writeln!(stream, "{}", length)?;
         // Każdy fragment szyfrogramu wysyłamy w osobnej linii
         for part in encrypted_message {
             writeln!(stream, "{}", part)?;
         }
+        writeln!(stream, "{}", n)?;
+        writeln!(stream, "{}", e)?;
     }
     Ok(())
 }
