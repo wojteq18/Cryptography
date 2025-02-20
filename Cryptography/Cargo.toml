@@ -1,10 +1,10 @@
 [package]
-name = "Cryptography"
+name = "cryptography"
 version = "0.1.0"
 edition = "2021"
 
 [lib]
-name = "Cryptography"
+name = "cryptography"
 path = "src/lib.rs"
 
 [dependencies]

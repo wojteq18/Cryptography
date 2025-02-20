@@ -47,11 +47,12 @@ fn handle_client(
 
                 //Rozsyłaanie wiadomości do wszystkich klientów
                 let clients_guard = clients.lock().unwrap();
+                let message_length = message.len();
                 for client in clients_guard.iter() {
-                    let mut client_stream = client.as_ref();
-                    //as_ref() zwraca referencje (&T) do zawartości Arc<T>
+                    let mut client_stream = client.try_clone().unwrap();
                     if client.peer_addr().unwrap() != peer_addr {
-                        writeln!(client_stream, "{}: {}", peer_addr, message).unwrap();
+                        writeln!(client_stream, "{}", message_length).unwrap();
+                        writeln!(client_stream, "{}", message).unwrap();
                         client_stream.flush().unwrap();
                     }
                 }

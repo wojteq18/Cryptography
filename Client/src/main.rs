@@ -11,46 +11,55 @@ fn string_to_vec_u128(s: &str) -> Vec<u128> {
 }
 
 fn main() -> std::io::Result<()> {
-    let (p, q, n, fi_n) = RSA::generate_rsa_values();   
+    let (p, q, n, fi_n) = RSA::generate_rsa_values();
     let e = RSA::generate_e(fi_n);
-    // Łączenie z serwerem
+
+    // 1. Łączenie z serwerem
     let mut stream = TcpStream::connect("127.0.0.1:9999")?;
     println!("Połączono z serwerem");
 
-    let n_shared = Arc::new(Mutex::new(0_u128));
-    let e_shared = Arc::new(Mutex::new(0_u128));
-
-    // Odbieranie wiadomości od serwera
-    let mut stream_clone = stream.try_clone()?; // Tworzenie klonu strumienia, by odbierać wiadomości od serwera
+    // Wątek odbierający dane
+    let mut stream_clone = stream.try_clone()?;
     thread::spawn(move || {
         let reader = BufReader::new(&mut stream_clone);
-        for line in reader.lines() {
-            match line {
+        // Wszystkie odebrane wartości (jako u128) wrzucamy do wektora
+        let mut messages: Vec<u128> = Vec::new();
+
+        for line_result in reader.lines() {
+            match line_result {
                 Ok(msg) => {
-                    if let Some(first_word) = msg.split_whitespace().next() {
-                        if let Ok(new_n) = first_word.parse::<u128>() {
-                            *n_shared.lock().unwrap() = new_n;
+                    // Każda linia interpretowana jako u128
+                    if let Ok(value) = msg.trim().parse::<u128>() {
+                        messages.push(value);
+                        //println!("Odebrano: {:?}", messages);
+                        let length = messages[0];
+                        if length == (messages.len() + 3) as u128 {
+                            println!("Otrzymano wiadomość: {:?}", messages);
+                            messages.clear();
+
                         }
+                    } else {
+                        println!("Błąd parsowania w linii: {}", msg);
                     }
-                    //let decrypted = unencryption::decrypt(correct_form);
-                    println!("Serwer: {}", msg) },
+                },
                 Err(e) => {
-                    println!("Błąd odczytu od serwera: {}", e);
+                    eprintln!("Błąd odczytu od serwera: {}", e);
                     break;
                 }
             }
         }
     });
 
-    // Wysyłanie wiadomości do serwera
+    // 2. Wysyłanie danych do serwera (szyfrujemy lokalnym kluczem (n, e))
     let stdin = std::io::stdin();
     for line in stdin.lock().lines() {
-        let line = line?; // Operator propagacji błędów
-        let encrypted_message = cryptography::encryption::encrypt(&line, e, n);
-        writeln!(stream, "{}", n)?;
-        writeln!(stream, "{}", e)?;
-        for i in encrypted_message.iter() {
-            writeln!(stream, "{}", i)?;
+        let line = line?;
+        // Szyfrujemy wiadomość
+        let encrypted_message = encrypt(&line, e, n);
+
+        // Każdy fragment szyfrogramu wysyłamy w osobnej linii
+        for part in encrypted_message {
+            writeln!(stream, "{}", part)?;
         }
     }
     Ok(())
