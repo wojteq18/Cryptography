@@ -7,18 +7,6 @@ pub fn to_ascii(text: &str) -> Vec<u8>
     }
     return ascii;
 }
-
-/*pub fn dividing_into_blocks(mut text: &str) -> Vec<String>
-{
-    let mut blocks: Vec<String> = Vec::new();
-    let (_, _, n, _) = RSA::generate_rsa_values();
-    for i in text.chars()
-    {
-        blocks.push(i.to_string());
-    }      
-    return blocks;
-}*/
-
 pub fn encrypt(text: &str, e: u128, n: u128) -> Vec<u128>
 {
     let mut encrypted: Vec<u128> = Vec::new();
