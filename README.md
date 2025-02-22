@@ -70,18 +70,5 @@ This functionality will be added in future updates.
 
 ---
 
-## Future Updates
 
-Planned improvements:
 
-- Support for encrypting and decrypting text files  
-- Handling larger RSA keys (e.g., 2048-bit keys)  
-- Better optimization of encryption algorithms  
-
----
-
-## License
-
-This project is licensed under the **MIT License** – feel free to use, modify, and share it.
-
-Have an idea for a new feature? Open a pull request on GitHub.
