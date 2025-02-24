@@ -3,6 +3,10 @@ name = "File_Operations"
 version = "0.1.0"
 edition = "2021"
 
+[lib]
+name = "file_operations"
+path = "src/lib.rs"
+
 [dependencies]
 cryptography = { path = "/home/wojteq18/codes/crypto_project/Cryptography" }
 
